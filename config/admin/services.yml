@@ -1,0 +1,11 @@
+imports:
+  - { resource: ../common.yml }
+
+services:
+  maze.mazetv.configuration.settings_form_fields:
+    class: Maze\MazeTv\Configuration\SettingsFormFields
+
+  maze.mazetv.configuration.settings_form_builder:
+    class: Maze\MazeTv\Configuration\SettingsFormBuilder
+    arguments:
+      - '@maze.mazetv.configuration.settings_form_fields'

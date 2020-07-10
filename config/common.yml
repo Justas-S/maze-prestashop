@@ -1,0 +1,24 @@
+services:
+  _defaults:
+    public: true
+
+  maze.mazetv.repository.maze_streamer_repository:
+    class: Maze\MazeTv\Repository\MazeStreamerRepository
+    factory: ['@doctrine.orm.default_entity_manager', getRepository]
+    arguments:
+      - Maze\MazeTv\Entity\MazeStreamer
+
+  maze.mazetv.message.payload_builder:
+    class: Maze\MazeTv\Message\PayloadBuilder
+    arguments:
+      - '@maze.mazetv.repository.maze_streamer_repository'
+
+  maze.mazetv.message.payload_sender:
+    class: Maze\MazeTv\Message\PayloadSender
+    arguments:
+      - '@maze.mazetv.client.guzzle_client'
+
+  maze.mazetv.client.guzzle_client:
+    class: Maze\MazeTv\Client\GuzzleClient
+    arguments:
+      - '@prestashop.adapter.legacy.configuration'
