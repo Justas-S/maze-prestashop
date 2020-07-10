@@ -101,7 +101,7 @@ class PayloadBuilder
         foreach ($products as $product) {
             foreach ($streamers as $streamer) {
                 if ($streamer->getManufacturerId() == $product['id_manufacturer']) {
-                    if (array_key_exists($streamer->getKey(), $grouped)) {
+                    if (!array_key_exists($streamer->getKey(), $grouped)) {
                         $grouped[$streamer->getKey()] = [];
                     }
                     $grouped[$streamer->getKey()][] = $product;
