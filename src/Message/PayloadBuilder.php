@@ -17,9 +17,15 @@ class PayloadBuilder
     /** @var MazeStreamerRepository */
     private $streamerRepository;
 
+    /**
+     * @var string
+     */
+    private $linkProtocol;
+
     public function __construct(MazeStreamerRepository $streamerRepository)
     {
         $this->streamerRepository = $streamerRepository;
+        $this->linkProtocol = (Configuration::get('PS_SSL_ENABLED')) ? 'https://' : 'http://';
     }
 
     /**
@@ -87,7 +93,8 @@ class PayloadBuilder
 
     private function getProductCoverImageUrl($idProduct, $linkRewrite)
     {
-        $link = new Link();
+
+        $link = new Link($this->linkProtocol, $this->linkProtocol);
         $coverImage = Image::getCover($idProduct);
         if ($coverImage && isset($coverImage['id_image'])) {
             return $link->getImageLink($linkRewrite, $coverImage['id_image']);
